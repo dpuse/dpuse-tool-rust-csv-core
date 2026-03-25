@@ -16,11 +16,11 @@ export default defineConfig({
     build: {
         lib: {
             entry: fileURLToPath(new URL('src/index.ts', import.meta.url)),
-            fileName: (format) => `datapos-tool-rust-csv-core.${format}.js`,
+            fileName: (format) => `dpuse-tool-rust-csv-core.${format}.js`,
             formats: ['es']
         },
         rollupOptions: {
-            external: ['@datapos/datapos-shared']
+            external: ['@dpuse/dpuse-shared']
         },
         target: 'ESNext'
     },

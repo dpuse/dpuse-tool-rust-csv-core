@@ -7,10 +7,10 @@
  */
 
 // Framework dependencies.
-import { OperationalError } from '@datapos/datapos-shared/errors';
+import { OperationalError } from '@dpuse/dpuse-shared/errors';
 
 // Tool dependencies - types.
-import type * as RustModule from '../rust/datapos_tool_rust_csv_core/pkg/datapos_tool_rust_csv_core.js';
+import type * as RustModule from '../rust/dpuse_tool_rust_csv_core/pkg/dpuse_tool_rust_csv_core.js';
 
 /**
  * Tool configuration.
@@ -82,7 +82,7 @@ class Tool {
                 durationMs: performance.now() - startTime
             };
         } catch (error) {
-            throw new OperationalError('Failed to process CSV stream.', 'datapos-tool-rust-csv-core|Tool|processWithTransferableStream', { cause: error });
+            throw new OperationalError('Failed to process CSV stream.', 'dpuse-tool-rust-csv-core|Tool|processWithTransferableStream', { cause: error });
         }
     }
 
@@ -130,7 +130,7 @@ class Tool {
                 reader.releaseLock();
             }
         } catch (error) {
-            throw new OperationalError('Failed to process CSV chunks.', 'datapos-tool-rust-csv-core|Tool|processWithChunks', { cause: error });
+            throw new OperationalError('Failed to process CSV chunks.', 'dpuse-tool-rust-csv-core|Tool|processWithChunks', { cause: error });
         }
     }
 }
@@ -140,7 +140,7 @@ class Tool {
  */
 async function loadRustBindings(): Promise<RustBindings> {
     if (!rustBindingsPromise) {
-        rustBindingsPromise = import('../rust/datapos_tool_rust_csv_core/pkg/datapos_tool_rust_csv_core.js').then(async (module) => {
+        rustBindingsPromise = import('../rust/dpuse_tool_rust_csv_core/pkg/dpuse_tool_rust_csv_core.js').then(async (module) => {
             await module.default();
             return module;
         });

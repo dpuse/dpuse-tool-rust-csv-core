@@ -17,7 +17,7 @@ A high-performance CSV parsing tool with Rust/WebAssembly core for the Data Posi
 ## Architecture
 
 The tool encapsulates:
-- **Rust Core** (`rust/datapos_tool_rust_csv_core`): Low-level CSV parsing with `csv-core`
+- **Rust Core** (`rust/dpuse_tool_rust_csv_core`): Low-level CSV parsing with `csv-core`
 - **TypeScript Wrapper** (`src/index.ts`): Browser-friendly API with automatic mode selection
 - **WASM Binary**: Compiled once, bundled with the tool
 
@@ -26,8 +26,8 @@ The tool encapsulates:
 The tool is designed to be loaded dynamically by connectors:
 
 ```typescript
-import { loadTool } from '@datapos/datapos-shared/component/tool';
-import type { Tool as RustCsvCoreTool } from '@datapos/datapos-tool-rust-csv-core';
+import { loadTool } from '@dpuse/dpuse-shared/component/tool';
+import type { Tool as RustCsvCoreTool } from '@dpuse/dpuse-tool-rust-csv-core';
 
 // Load the tool (loaded once, shared across all uses)
 const csvTool = await loadTool<RustCsvCoreTool>(toolConfigs, 'rust-csv-core');
@@ -69,11 +69,11 @@ npm run build
 
 **Structure:**
 ```
-datapos-tool-rust-csv-core/
+dpuse-tool-rust-csv-core/
 ├── src/
 │   └── index.ts              # TypeScript API wrapper
 ├── rust/
-│   └── datapos_tool_rust_csv_core/
+│   └── dpuse_tool_rust_csv_core/
 │       ├── src/
 │       │   └── lib.rs         # Rust CSV core
 │       ├── pkg/               # Generated WASM (gitignored)

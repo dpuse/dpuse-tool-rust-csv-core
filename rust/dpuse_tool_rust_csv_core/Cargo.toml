@@ -1,8 +1,8 @@
 [package]
-name = "datapos-tool-rust-csv-core"
+name = "dpuse-tool-rust-csv-core"
 version = "0.1.0"
 edition = "2024"
-authors = ["Data Positioning <info@datapos.app>"]
+authors = ["Data Positioning <info@dpuse.app>"]
 license = "MIT"
 description = "CSV parsing core with streaming support"
 
