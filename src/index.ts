@@ -7,7 +7,7 @@
  */
 
 // Framework dependencies.
-import { OperationalError } from '@dpuse/dpuse-shared/errors';
+import { ConnectorError } from '@dpuse/dpuse-shared/errors'; // TODO: This should be  Module or Tool error?
 
 // Tool dependencies - types.
 import type * as RustModule from '../rust/dpuse_tool_rust_csv_core/pkg/dpuse_tool_rust_csv_core.js';
@@ -63,7 +63,7 @@ class Tool {
         onProgress?: (rowCount: number) => void
     ): Promise<CsvProcessingSummary> {
         const xxxx = await loadRustBindings();
-        const delimiter = options.delimiter?.charCodeAt(0) ?? 44; // Default comma
+        const delimiter = options.delimiter?.codePointAt(0) ?? 44; // Default comma
         const hasHeaders = options.hasHeaders ?? true;
 
         const startTime = performance.now();
@@ -82,7 +82,7 @@ class Tool {
                 durationMs: performance.now() - startTime
             };
         } catch (error) {
-            throw new OperationalError('Failed to process CSV stream.', 'dpuse-tool-rust-csv-core|Tool|processWithTransferableStream', { cause: error });
+            throw new ConnectorError('Failed to process CSV stream.', 'dpuse-tool-rust-csv-core|Tool|processWithTransferableStream', { cause: error });
         }
     }
 
@@ -91,7 +91,7 @@ class Tool {
      */
     async processWithChunks(stream: ReadableStream<Uint8Array>, options: CsvProcessingOptions = {}, onProgress?: (rowCount: number) => void): Promise<CsvProcessingSummary> {
         const { CsvSession } = await loadRustBindings();
-        const delimiter = options.delimiter?.charCodeAt(0) ?? 44;
+        const delimiter = options.delimiter?.codePointAt(0) ?? 44;
         const hasHeaders = options.hasHeaders ?? true;
 
         const startTime = performance.now();
@@ -107,15 +107,17 @@ class Tool {
                     const { value, done } = await reader.read();
                     if (done) break;
 
-                    if (value) {
-                        const rows = session.pushChunk(value);
-                        const count = Array.isArray(rows) ? rows.length : 0;
-                        processedRowCount += count;
-                        if (onProgress && count > 0) onProgress(count);
-                    }
+                    // if (value) {
+                    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+                    const rows = session.pushChunk(value);
+                    const count = Array.isArray(rows) ? rows.length : 0;
+                    processedRowCount += count;
+                    if (onProgress && count > 0) onProgress(count);
+                    // }
                 }
 
                 // Finish processing
+                // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
                 const remainingRows = session.finish();
                 const remainingCount = Array.isArray(remainingRows) ? remainingRows.length : 0;
                 processedRowCount += remainingCount;
@@ -130,7 +132,7 @@ class Tool {
                 reader.releaseLock();
             }
         } catch (error) {
-            throw new OperationalError('Failed to process CSV chunks.', 'dpuse-tool-rust-csv-core|Tool|processWithChunks', { cause: error });
+            throw new ConnectorError('Failed to process CSV chunks.', 'dpuse-tool-rust-csv-core|Tool|processWithChunks', { cause: error });
         }
     }
 }
@@ -139,12 +141,10 @@ class Tool {
  * Load Rust bindings lazily.
  */
 async function loadRustBindings(): Promise<RustBindings> {
-    if (!rustBindingsPromise) {
-        rustBindingsPromise = import('../rust/dpuse_tool_rust_csv_core/pkg/dpuse_tool_rust_csv_core.js').then(async (module) => {
-            await module.default();
-            return module;
-        });
-    }
+    rustBindingsPromise ??= import('../rust/dpuse_tool_rust_csv_core/pkg/dpuse_tool_rust_csv_core.js').then(async (module) => {
+        await module.default();
+        return module;
+    });
     return rustBindingsPromise;
 }
 
