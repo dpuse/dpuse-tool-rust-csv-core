@@ -1,30 +1,29 @@
-/**
- * Vite configuration.
- */
-
-// Vendor dependencies.
-import { defineConfig, type PluginOption } from 'vite';
+// ── External Dependencies & Registrations
+import { defineConfig } from 'vite';
 import dts from 'vite-plugin-dts';
-import wasm from 'vite-plugin-wasm';
+import Sonda from 'sonda/vite';
 import { fileURLToPath, URL } from 'node:url';
 
-// Initialisation.
-const wasmPlugin = wasm() as PluginOption;
+// ── Data
+import config from './config.json';
 
-// Exposures.
+// ── Vite Configuration ───────────────────────────────────────────────────────────────────────────────────────────────
+
 export default defineConfig({
     build: {
         lib: {
             entry: fileURLToPath(new URL('src/index.ts', import.meta.url)),
-            fileName: (format) => `dpuse-tool-rust-csv-core.${format}.js`,
+            fileName: (format) => `${config.id}.${format}.js`,
             formats: ['es']
         },
         rollupOptions: {
-            external: ['@dpuse/dpuse-shared']
+            external: ['@dpuse/dpuse-shared', /^https:\/\/engine-eu\.dpuse\.app\//],
+            plugins: [Sonda({ filename: 'index', format: 'json', brotli: true, gzip: false, open: false, outputDir: './bundle-analysis-reports/sonda' })]
         },
+        sourcemap: true,
         target: 'ESNext'
     },
-    plugins: [dts({ outDir: 'dist/types' }), wasmPlugin],
+    plugins: [dts({ outDirs: 'dist/types' })],
     resolve: {
         alias: {
             '~': fileURLToPath(new URL('./', import.meta.url)),

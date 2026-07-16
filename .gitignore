@@ -1,22 +1,26 @@
-# Dependencies
+# '.gitignore' configuration for DPUse projects published to npm.
+.dev.vars
+.env*
+.eslintcache
+.npmrc
+.wrangler
+coverage
+dist-scripts
 node_modules
-
-# Build outputs
-dist
-
-# Rust build artifacts
-rust/*/pkg
-rust/*/target
-rust/target
-**/Cargo.lock
-
-# Environment files
-.env
-.env.local
-
-# System files
-.DS_Store
+*.tsbuildinfo
 **/.DS_Store
 
 # Logs
+logs
 *.log
+npm-debug.log*
+
+# Rust
+rust/*/pkg
+rust/*/target
+rust/target
+
+# Testing
+__screenshots__/
+test-results/
+playwright-report/
