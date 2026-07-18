@@ -1,12 +1,14 @@
 {
     "id": "dpuse-tool-rust-csv-core",
     "label": {
-        "en-gb": "Rust CSV core"
+        "en": "Rust CSV core"
     },
     "description": {
-        "en-gb": "..."
+        "en": [
+            "..."
+        ]
     },
     "statusId": "alpha",
     "typeId": "tool",
-    "version": "0.1.22"
+    "version": "0.1.23"
 }
