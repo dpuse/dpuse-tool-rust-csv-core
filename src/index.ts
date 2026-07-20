@@ -27,9 +27,11 @@ export const config = {
 type RustBindings = typeof RustModule;
 
 /**
- * Module variables.
+ * Module state.
  */
-let rustBindingsPromise: Promise<RustBindings> | undefined;
+const state: { rustBindingsPromise: Promise<RustBindings> | undefined } = {
+    rustBindingsPromise: undefined
+};
 
 /**
  * CSV processing options.
@@ -141,11 +143,12 @@ class Tool {
  * Load Rust bindings lazily.
  */
 async function loadRustBindings(): Promise<RustBindings> {
-    rustBindingsPromise ??= import('../rust/dpuse_tool_rust_csv_core/pkg/dpuse_tool_rust_csv_core.js').then(async (module) => {
+    state.rustBindingsPromise ??= (async () => {
+        const module = await import('../rust/dpuse_tool_rust_csv_core/pkg/dpuse_tool_rust_csv_core.js');
         await module.default();
         return module;
-    });
-    return rustBindingsPromise;
+    })();
+    return state.rustBindingsPromise;
 }
 
 // Exposures.

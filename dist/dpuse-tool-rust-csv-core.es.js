@@ -13,7 +13,7 @@ var e = class extends Error {
 	id: "rust-csv-core",
 	name: "Rust CSV Core",
 	version: "0.1.0"
-}, r, i = class {
+}, r = { rustBindingsPromise: void 0 }, i = class {
 	config = n;
 	async processWithTransferableStream(e, n = {}, r) {
 		let i = await a(), o = n.delimiter?.codePointAt(0) ?? 44, s = n.hasHeaders ?? !0, c = performance.now(), l = 0, u = (e) => {
@@ -55,7 +55,12 @@ var e = class extends Error {
 	}
 };
 async function a() {
-	return r ??= import("./dpuse_tool_rust_csv_core-B7xYKDS3.js").then(async (e) => (await e.default(), e)), r;
+	return r.rustBindingsPromise ??= (async () => {
+		let e = await import("./dpuse_tool_rust_csv_core-DwJ1gYR7.js");
+		return await e.default(), e;
+	})(), r.rustBindingsPromise;
 }
 //#endregion
 export { i as Tool, n as config };
+
+//# sourceMappingURL=dpuse-tool-rust-csv-core.es.js.map

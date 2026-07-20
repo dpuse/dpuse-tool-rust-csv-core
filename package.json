@@ -1,17 +1,19 @@
 {
     "name": "@dpuse/dpuse-tool-rust-csv-core",
-    "version": "0.1.24",
+    "version": "0.1.25",
+    "private": false,
     "description": "CSV parser tool with Rust/WASM core for high-performance streaming",
     "license": "MIT",
-    "private": false,
+    "author": "Jonathan Terrell <terrell.jm@gmail.com>",
     "type": "module",
+    "sideEffects": false,
     "homepage": "https://www.dpuse.app",
+    "bugs": {
+        "url": "https://github.com/dpuse/dpuse-tool-rust-csv-core/issues"
+    },
     "repository": {
         "type": "git",
         "url": "git+https://github.com/dpuse/dpuse-tool-rust-csv-core.git"
-    },
-    "bugs": {
-        "url": "https://github.com/dpuse/dpuse-tool-rust-csv-core/issues"
     },
     "module": "./dist/dpuse-tool-rust-csv-core.es.js",
     "types": "./dist/types/index.d.ts",
@@ -24,37 +26,17 @@
     "files": [
         "dist"
     ],
-    "prettier": "@dpuse/dpuse-development/prettierrc",
-    "dependencies": {
-        "@dpuse/dpuse-shared": "^0.3.743"
+    "engines": {
+        "node": ">=23.11",
+        "npm": ">=11"
     },
-    "devDependencies": {
-        "@dpuse/dpuse-development": "^0.3.690",
-        "@dpuse/eslint-config-dpuse": "^1.0.113",
-        "@types/node": "^26.1.1",
-        "@typescript-eslint/eslint-plugin": "^8.64.0",
-        "@typescript-eslint/parser": "^8.64.0",
-        "eslint": "^10.7.0",
-        "eslint-import-resolver-typescript": "^4.4.5",
-        "eslint-plugin-import": "^2.32.0",
-        "eslint-plugin-security": "^4.0.1",
-        "eslint-plugin-sonarjs": "^4.2.0",
-        "eslint-plugin-unicorn": "^72.0.0",
-        "jiti": "^2.7.0",
-        "license-downloader": "^2.0.0",
-        "license-report": "^6.8.5",
-        "license-report-check": "^1.0.1",
-        "license-report-recursive": "^6.8.5",
-        "npm-check-updates": "^22.2.9",
-        "owasp-dependency-check": "^1.0.1",
-        "prettier": "^3.9.5",
-        "rollup-plugin-visualizer": "^7.0.1",
-        "sonda": "^0.14.0",
-        "typescript": "^5.9.3",
-        "vite": "^8.1.5",
-        "vite-plugin-dts": "^5.0.3",
-        "vite-plugin-wasm": "^3.6.0",
-        "vitest": "^4.1.10"
+    "prettier": "@dpuse/dpuse-development/prettierrc",
+    "allowScripts": {
+        "esbuild@0.28.1": true,
+        "fsevents@2.3.3": true,
+        "sharp@0.34.5": true,
+        "unrs-resolver@1.12.2": true,
+        "workerd@1.20260714.1": true
     },
     "scripts": {
         "build": "npm run build:wasm && npx vite build",
@@ -64,5 +46,21 @@
         "lint": "node -e \"import('@dpuse/dpuse-development').then(m => m.lintCode())\"",
         "release": "op run --env-file=.env -- node -e \"import('@dpuse/dpuse-development').then(m => m.releaseProject())\"",
         "sync": "node -e \"import('@dpuse/dpuse-development').then(m => m.syncProjectWithGitHub())\""
+    },
+    "dependencies": {
+        "@dpuse/dpuse-shared": "^0.3.745"
+    },
+    "devDependencies": {
+        "@dpuse/dpuse-development": "^0.3.690",
+        "@dpuse/eslint-config-dpuse": "^1.0.113",
+        "@types/node": "^26.1.1",
+        "eslint": "^10.7.0",
+        "prettier": "^3.9.5",
+        "sonda": "^0.14.0",
+        "typescript": "^6.0.3",
+        "vite": "^8.1.5",
+        "vite-plugin-dts": "^5.0.3",
+        "vite-plugin-wasm": "^3.6.0",
+        "vitest": "^4.1.10"
     }
 }

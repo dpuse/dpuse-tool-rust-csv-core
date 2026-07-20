@@ -47,4 +47,3 @@ declare class Tool {
     processWithChunks(stream: ReadableStream<Uint8Array>, options?: CsvProcessingOptions, onProgress?: (rowCount: number) => void): Promise<CsvProcessingSummary>;
 }
 export { Tool };
-//# sourceMappingURL=index.d.ts.map
