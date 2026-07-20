@@ -1,6 +1,6 @@
 {
     "name": "@dpuse/dpuse-tool-rust-csv-core",
-    "version": "0.1.25",
+    "version": "0.1.26",
     "private": false,
     "description": "CSV parser tool with Rust/WASM core for high-performance streaming",
     "license": "MIT",
@@ -48,7 +48,8 @@
         "sync": "node -e \"import('@dpuse/dpuse-development').then(m => m.syncProjectWithGitHub())\""
     },
     "dependencies": {
-        "@dpuse/dpuse-shared": "^0.3.745"
+        "@dpuse/dpuse-shared": "^0.3.745",
+        "wrangler": "^4.112.0"
     },
     "devDependencies": {
         "@dpuse/dpuse-development": "^0.3.690",
