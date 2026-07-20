@@ -23,7 +23,7 @@ export default defineConfig({
         sourcemap: true,
         target: 'ESNext'
     },
-    plugins: [dts({ outDirs: 'dist/types' })],
+    plugins: [dts({ outDirs: 'dist/types', entryRoot: 'src' })],
     resolve: {
         alias: {
             '~': fileURLToPath(new URL('./', import.meta.url)),
